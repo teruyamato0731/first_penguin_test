@@ -22,7 +22,8 @@ struct FirstPenguin {
     }
   } receive[4] = {};
   void read(const CANMessage& msg) {
-    if(msg.format == CANStandard && msg.type == CANData && msg.len == sizeof(receive[0])) {
+    if(msg.format == CANStandard && msg.type == CANData && msg.len == sizeof(receive[0]) && send_id < msg.id &&
+       msg.id <= send_id + 5) {
       receive[msg.id - send_id - 1].set(msg.data);
     }
   }
